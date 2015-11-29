@@ -45,3 +45,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.vs/*
+FlyAwayInserter/bin/*
+FlyAwayInserter/obj/*
+
