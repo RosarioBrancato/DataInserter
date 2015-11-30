@@ -115,7 +115,7 @@
 			// btnConnectionSettings
 			// 
 			this.btnConnectionSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnConnectionSettings.Location = new System.Drawing.Point(814, 9);
+			this.btnConnectionSettings.Location = new System.Drawing.Point(599, 9);
 			this.btnConnectionSettings.Name = "btnConnectionSettings";
 			this.btnConnectionSettings.Size = new System.Drawing.Size(203, 23);
 			this.btnConnectionSettings.TabIndex = 4;
@@ -252,7 +252,7 @@
 			this.lblTableRowCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblTableRowCount.Location = new System.Drawing.Point(456, 9);
 			this.lblTableRowCount.Name = "lblTableRowCount";
-			this.lblTableRowCount.Size = new System.Drawing.Size(320, 23);
+			this.lblTableRowCount.Size = new System.Drawing.Size(134, 23);
 			this.lblTableRowCount.TabIndex = 6;
 			this.lblTableRowCount.Text = "RowCount: -";
 			this.lblTableRowCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
