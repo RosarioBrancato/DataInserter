@@ -72,9 +72,12 @@
 			this.txtQuery.Multiline = true;
 			this.txtQuery.Name = "txtQuery";
 			this.txtQuery.ReadOnly = true;
+			this.txtQuery.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.txtQuery.Size = new System.Drawing.Size(1002, 230);
 			this.txtQuery.TabIndex = 1;
 			this.txtQuery.TabStop = false;
+			this.txtQuery.WordWrap = false;
+			this.txtQuery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtQuery_KeyDown);
 			// 
 			// lblQuery
 			// 

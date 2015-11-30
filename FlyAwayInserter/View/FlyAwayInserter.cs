@@ -219,5 +219,11 @@ namespace FlyAwayInserter {
 		private void btnConnectionSettings_Click(object sender, EventArgs e) {
 			this.configureConnection();
 		}
+
+		private void txtQuery_KeyDown(object sender, KeyEventArgs e) {
+			if(e.Control && e.KeyCode == Keys.A) {
+				this.txtQuery.SelectAll();
+			}
+		}
 	}
 }
