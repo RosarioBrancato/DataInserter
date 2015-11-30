@@ -79,12 +79,12 @@
 			// lblQuery
 			// 
 			this.lblQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblQuery.Location = new System.Drawing.Point(12, 3);
+			this.lblQuery.Location = new System.Drawing.Point(12, 5);
 			this.lblQuery.Name = "lblQuery";
 			this.lblQuery.Size = new System.Drawing.Size(71, 23);
 			this.lblQuery.TabIndex = 2;
 			this.lblQuery.Text = "Query";
-			this.lblQuery.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.lblQuery.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// lblTablename
 			// 
@@ -135,7 +135,7 @@
 			// 
 			this.chkAllowEdit.AutoSize = true;
 			this.chkAllowEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.chkAllowEdit.Location = new System.Drawing.Point(118, 5);
+			this.chkAllowEdit.Location = new System.Drawing.Point(118, 7);
 			this.chkAllowEdit.Name = "chkAllowEdit";
 			this.chkAllowEdit.Size = new System.Drawing.Size(84, 20);
 			this.chkAllowEdit.TabIndex = 4;

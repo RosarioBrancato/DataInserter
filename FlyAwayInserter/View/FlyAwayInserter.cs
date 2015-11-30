@@ -26,7 +26,8 @@ namespace FlyAwayInserter {
 			this.dbInformation = new DbInformation();
 			this.dbFlyAway = new DbFlyAway();
 
-			this.fillTablenames();
+			//Set up
+			this.configureConnection();
 		}
 
 		private void fillTablenames() {
@@ -186,6 +187,15 @@ namespace FlyAwayInserter {
 			}
 		}
 
+		private void configureConnection() {
+			using (ConnectionSettings dlg = new ConnectionSettings()) {
+				DialogResult res = dlg.ShowDialog(this);
+
+				if (res == DialogResult.Yes) {
+					this.fillTablenames();
+				}
+			}
+		}
 
 		private void cmbTables_SelectedIndexChanged(object sender, EventArgs e) {
 			if (this.cmbTables.SelectedItem != null) {
@@ -207,13 +217,7 @@ namespace FlyAwayInserter {
 		}
 
 		private void btnConnectionSettings_Click(object sender, EventArgs e) {
-			using(ConnectionSettings dlg = new ConnectionSettings()) {
-				DialogResult res = dlg.ShowDialog(this);
-
-				if(res == DialogResult.Yes) {
-					this.fillTablenames();
-				}
-			}
+			this.configureConnection();
 		}
 	}
 }
