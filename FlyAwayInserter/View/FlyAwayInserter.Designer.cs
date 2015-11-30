@@ -41,6 +41,7 @@
 			this.lblTestId = new System.Windows.Forms.Label();
 			this.pnlBottom = new System.Windows.Forms.Panel();
 			this.btnAdd = new System.Windows.Forms.Button();
+			this.lblTableRowCount = new System.Windows.Forms.Label();
 			this.pnlTablename.SuspendLayout();
 			this.pnlQuery.SuspendLayout();
 			this.pnlFields.SuspendLayout();
@@ -101,6 +102,7 @@
 			// 
 			// pnlTablename
 			// 
+			this.pnlTablename.Controls.Add(this.lblTableRowCount);
 			this.pnlTablename.Controls.Add(this.btnConnectionSettings);
 			this.pnlTablename.Controls.Add(this.lblTablename);
 			this.pnlTablename.Controls.Add(this.cmbTables);
@@ -113,7 +115,7 @@
 			// btnConnectionSettings
 			// 
 			this.btnConnectionSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnConnectionSettings.Location = new System.Drawing.Point(456, 9);
+			this.btnConnectionSettings.Location = new System.Drawing.Point(814, 9);
 			this.btnConnectionSettings.Name = "btnConnectionSettings";
 			this.btnConnectionSettings.Size = new System.Drawing.Size(203, 23);
 			this.btnConnectionSettings.TabIndex = 4;
@@ -245,6 +247,16 @@
 			this.btnAdd.UseVisualStyleBackColor = true;
 			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
 			// 
+			// lblTableRowCount
+			// 
+			this.lblTableRowCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblTableRowCount.Location = new System.Drawing.Point(456, 9);
+			this.lblTableRowCount.Name = "lblTableRowCount";
+			this.lblTableRowCount.Size = new System.Drawing.Size(320, 23);
+			this.lblTableRowCount.TabIndex = 6;
+			this.lblTableRowCount.Text = "RowCount: -";
+			this.lblTableRowCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// FlyAwayInserter
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,6 +302,7 @@
 		private System.Windows.Forms.Label lblTestId;
 		private System.Windows.Forms.CheckBox chkAllowEdit;
 		private System.Windows.Forms.Button btnConnectionSettings;
+		private System.Windows.Forms.Label lblTableRowCount;
 	}
 }
 

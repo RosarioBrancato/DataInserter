@@ -12,7 +12,7 @@ namespace FlyAwayInserter.Db {
 		public List<string> GetTablenames() {
 			List<string> tablenames = new List<string>();
 
-			string query = "SHOW TABLES FROM FlyAway";
+			string query = "SHOW TABLES FROM " + ConnectionString.Instance.Database;
 
 			using (MySqlTransaction transaction = Connection.Instance.StartTransaction()) {
 				MySqlCommand command = Connection.Instance.GetCommand(query, transaction);
@@ -54,6 +54,26 @@ namespace FlyAwayInserter.Db {
 			}
 
 			return information;
+		}
+
+		public int GetRowCount(string tablename) {
+			int count = 0;
+
+			string query = "SELECT COUNT(*) FROM " + tablename;
+
+			using (MySqlTransaction transaction = Connection.Instance.StartTransaction()) {
+				MySqlCommand command = Connection.Instance.GetCommand(query, transaction);
+
+				using (MySqlDataReader reader = command.ExecuteReader()) {
+					while (reader.Read()) {
+						count = reader.GetInt32(0);
+					}
+				}
+
+				transaction.Commit();
+			}
+
+			return count;
 		}
 
 	}

@@ -47,11 +47,15 @@ namespace FlyAwayInserter {
 
 				this.table = new Table(tablename, cs);
 
+				this.updateRowCount();
 				this.configureView();
 			}
 		}
 
-
+		private void updateRowCount() {
+			int rowCount = this.dbInformation.GetRowCount(this.table.TableName);
+			this.lblTableRowCount.Text = "Row count: " + rowCount.ToString();
+		}
 
 		private void configureView() {
 			this.pnlColumnnames.Controls.Clear();
@@ -183,6 +187,8 @@ namespace FlyAwayInserter {
 		private void executeQuery() {
 			if (this.txtQuery.Text.Trim().Length > 0) {
 				ReportMessage message = this.dbFlyAway.ExecuteQuery(this.txtQuery.Text);
+				this.updateRowCount();
+
                 MessageBox.Show(this, message.Message, "Execute query", MessageBoxButtons.OK, message.GetIconOfStatus());
 			}
 		}
