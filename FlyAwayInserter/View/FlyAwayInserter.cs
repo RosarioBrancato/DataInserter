@@ -83,7 +83,7 @@ namespace FlyAwayInserter {
 				TextBox textbox = this.GetValueTextBox();
 				textbox.Location = new Point(0, location_y);
 				textbox.Tag = cs;
-				if (cs.ColumnName.ToLower() == "id") {
+				if (!string.IsNullOrEmpty(cs.Extra) && cs.Extra.ToLower().Contains("auto_increment")) {
 					textbox.Text = "1";
 					textbox.TabStop = false;
 					this.ctrlToIncrement = textbox;
@@ -94,7 +94,7 @@ namespace FlyAwayInserter {
 				Label lblColumnInfo = this.GetColumnInfoLabel();
 				lblColumnInfo.Location = new Point(0, location_y);
 				if (!string.IsNullOrEmpty(cs.DataType)) {
-					lblColumnInfo.Text += "DataType: " + cs.DataType + "; ";
+					lblColumnInfo.Text += cs.DataType + "; ";
 				}
 				if(!string.IsNullOrEmpty(cs.IsNullable)) {
 					lblColumnInfo.Text += "Is nullable: " + cs.IsNullable + "; ";
