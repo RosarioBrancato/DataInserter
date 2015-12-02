@@ -41,7 +41,9 @@
 			this.lblTestId = new System.Windows.Forms.Label();
 			this.pnlBottom = new System.Windows.Forms.Panel();
 			this.btnAdd = new System.Windows.Forms.Button();
-			this.lblTableRowCount = new System.Windows.Forms.Label();
+			this.pnlTableData = new System.Windows.Forms.Panel();
+			this.lsvTableData = new System.Windows.Forms.ListView();
+			this.splitter = new System.Windows.Forms.Splitter();
 			this.pnlTablename.SuspendLayout();
 			this.pnlQuery.SuspendLayout();
 			this.pnlFields.SuspendLayout();
@@ -49,6 +51,7 @@
 			this.pnlValues.SuspendLayout();
 			this.pnlColumnnames.SuspendLayout();
 			this.pnlBottom.SuspendLayout();
+			this.pnlTableData.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cmbTables
@@ -74,7 +77,7 @@
 			this.txtQuery.Name = "txtQuery";
 			this.txtQuery.ReadOnly = true;
 			this.txtQuery.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtQuery.Size = new System.Drawing.Size(1002, 230);
+			this.txtQuery.Size = new System.Drawing.Size(1002, 178);
 			this.txtQuery.TabIndex = 1;
 			this.txtQuery.TabStop = false;
 			this.txtQuery.WordWrap = false;
@@ -102,7 +105,6 @@
 			// 
 			// pnlTablename
 			// 
-			this.pnlTablename.Controls.Add(this.lblTableRowCount);
 			this.pnlTablename.Controls.Add(this.btnConnectionSettings);
 			this.pnlTablename.Controls.Add(this.lblTablename);
 			this.pnlTablename.Controls.Add(this.cmbTables);
@@ -115,7 +117,7 @@
 			// btnConnectionSettings
 			// 
 			this.btnConnectionSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnConnectionSettings.Location = new System.Drawing.Point(599, 9);
+			this.btnConnectionSettings.Location = new System.Drawing.Point(456, 9);
 			this.btnConnectionSettings.Name = "btnConnectionSettings";
 			this.btnConnectionSettings.Size = new System.Drawing.Size(203, 23);
 			this.btnConnectionSettings.TabIndex = 4;
@@ -130,10 +132,10 @@
 			this.pnlQuery.Controls.Add(this.btnExcecute);
 			this.pnlQuery.Controls.Add(this.txtQuery);
 			this.pnlQuery.Controls.Add(this.lblQuery);
-			this.pnlQuery.Dock = System.Windows.Forms.DockStyle.Top;
-			this.pnlQuery.Location = new System.Drawing.Point(0, 45);
+			this.pnlQuery.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.pnlQuery.Location = new System.Drawing.Point(0, 247);
 			this.pnlQuery.Name = "pnlQuery";
-			this.pnlQuery.Size = new System.Drawing.Size(1029, 294);
+			this.pnlQuery.Size = new System.Drawing.Size(1029, 242);
 			this.pnlQuery.TabIndex = 5;
 			// 
 			// chkAllowEdit
@@ -152,7 +154,7 @@
 			// btnExcecute
 			// 
 			this.btnExcecute.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnExcecute.Location = new System.Drawing.Point(15, 265);
+			this.btnExcecute.Location = new System.Drawing.Point(15, 213);
 			this.btnExcecute.Name = "btnExcecute";
 			this.btnExcecute.Size = new System.Drawing.Size(139, 23);
 			this.btnExcecute.TabIndex = 3;
@@ -166,8 +168,8 @@
 			this.pnlFields.Controls.Add(this.pnlColumnInfos);
 			this.pnlFields.Controls.Add(this.pnlValues);
 			this.pnlFields.Controls.Add(this.pnlColumnnames);
-			this.pnlFields.Dock = System.Windows.Forms.DockStyle.Top;
-			this.pnlFields.Location = new System.Drawing.Point(0, 339);
+			this.pnlFields.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.pnlFields.Location = new System.Drawing.Point(0, 489);
 			this.pnlFields.Name = "pnlFields";
 			this.pnlFields.Size = new System.Drawing.Size(1029, 33);
 			this.pnlFields.TabIndex = 6;
@@ -230,8 +232,8 @@
 			// pnlBottom
 			// 
 			this.pnlBottom.Controls.Add(this.btnAdd);
-			this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Top;
-			this.pnlBottom.Location = new System.Drawing.Point(0, 372);
+			this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.pnlBottom.Location = new System.Drawing.Point(0, 522);
 			this.pnlBottom.Name = "pnlBottom";
 			this.pnlBottom.Size = new System.Drawing.Size(1029, 39);
 			this.pnlBottom.TabIndex = 7;
@@ -247,25 +249,50 @@
 			this.btnAdd.UseVisualStyleBackColor = true;
 			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
 			// 
-			// lblTableRowCount
+			// pnlTableData
 			// 
-			this.lblTableRowCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTableRowCount.Location = new System.Drawing.Point(456, 9);
-			this.lblTableRowCount.Name = "lblTableRowCount";
-			this.lblTableRowCount.Size = new System.Drawing.Size(134, 23);
-			this.lblTableRowCount.TabIndex = 6;
-			this.lblTableRowCount.Text = "RowCount: -";
-			this.lblTableRowCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.pnlTableData.Controls.Add(this.lsvTableData);
+			this.pnlTableData.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlTableData.Location = new System.Drawing.Point(0, 45);
+			this.pnlTableData.Name = "pnlTableData";
+			this.pnlTableData.Size = new System.Drawing.Size(1029, 197);
+			this.pnlTableData.TabIndex = 8;
+			// 
+			// lsvTableData
+			// 
+			this.lsvTableData.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lsvTableData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lsvTableData.FullRowSelect = true;
+			this.lsvTableData.GridLines = true;
+			this.lsvTableData.HideSelection = false;
+			this.lsvTableData.Location = new System.Drawing.Point(0, 0);
+			this.lsvTableData.Name = "lsvTableData";
+			this.lsvTableData.Size = new System.Drawing.Size(1029, 197);
+			this.lsvTableData.TabIndex = 0;
+			this.lsvTableData.TabStop = false;
+			this.lsvTableData.UseCompatibleStateImageBehavior = false;
+			this.lsvTableData.View = System.Windows.Forms.View.Details;
+			// 
+			// splitter
+			// 
+			this.splitter.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.splitter.Location = new System.Drawing.Point(0, 242);
+			this.splitter.Name = "splitter";
+			this.splitter.Size = new System.Drawing.Size(1029, 5);
+			this.splitter.TabIndex = 5;
+			this.splitter.TabStop = false;
 			// 
 			// FlyAwayInserter
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1029, 411);
-			this.Controls.Add(this.pnlBottom);
-			this.Controls.Add(this.pnlFields);
+			this.ClientSize = new System.Drawing.Size(1029, 561);
+			this.Controls.Add(this.pnlTableData);
+			this.Controls.Add(this.splitter);
 			this.Controls.Add(this.pnlQuery);
 			this.Controls.Add(this.pnlTablename);
+			this.Controls.Add(this.pnlFields);
+			this.Controls.Add(this.pnlBottom);
 			this.Name = "FlyAwayInserter";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "FlyAwayInserter";
@@ -278,6 +305,7 @@
 			this.pnlValues.PerformLayout();
 			this.pnlColumnnames.ResumeLayout(false);
 			this.pnlBottom.ResumeLayout(false);
+			this.pnlTableData.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -302,7 +330,9 @@
 		private System.Windows.Forms.Label lblTestId;
 		private System.Windows.Forms.CheckBox chkAllowEdit;
 		private System.Windows.Forms.Button btnConnectionSettings;
-		private System.Windows.Forms.Label lblTableRowCount;
+		private System.Windows.Forms.Panel pnlTableData;
+		private System.Windows.Forms.ListView lsvTableData;
+		private System.Windows.Forms.Splitter splitter;
 	}
 }
 

@@ -29,12 +29,14 @@ namespace FlyAwayInserter.Db {
 			return tablenames;
 		}
 
-		public List<ColumnStructure> GetColumnInformation(string tablename) {
+		public Table GetTable(string tablename) {
+			Table table = null;
 			List<ColumnStructure> information = new List<ColumnStructure>();
 
-			string query = "DESC " + tablename;
-
 			using (MySqlTransaction transaction = Connection.Instance.StartTransaction()) {
+
+				//Structure
+				string query = "DESC " + tablename;
 				MySqlCommand command = Connection.Instance.GetCommand(query, transaction);
 
 				using (MySqlDataReader reader = command.ExecuteReader()) {
@@ -43,6 +45,7 @@ namespace FlyAwayInserter.Db {
 
 						cs.ColumnName = DbUtils.GetString(reader["Field"]);
 						cs.DataType = DbUtils.GetString(reader["Type"]);
+						cs.KeyType = DbUtils.GetString(reader["Key"]);
 						cs.IsNullable = DbUtils.GetString(reader["Null"]);
 						cs.Extra = DbUtils.GetString(reader["Extra"]);
 
@@ -50,10 +53,27 @@ namespace FlyAwayInserter.Db {
 					}
 				}
 
+				//Data
+				table = new Table(tablename, information);
+
+				query = "SELECT * from " + tablename;
+				MySqlCommand commandData = Connection.Instance.GetCommand(query, transaction);
+
+				using(MySqlDataReader reader = commandData.ExecuteReader()) {
+					while(reader.Read()) {
+						DataRow row = new DataRow();
+						row.ColumnStructure = information;
+						for (int i = 0; i < reader.FieldCount; i++) {
+							row.Attributes.Add(new Flag(reader.GetName(i), reader[i].ToString(),  reader.GetDataTypeName(i)));
+						}
+						table.DataRows.Add(row);
+					}
+				}
+
 				transaction.Commit();
 			}
 
-			return information;
+			return table;
 		}
 
 		public int GetRowCount(string tablename) {
@@ -74,6 +94,35 @@ namespace FlyAwayInserter.Db {
 			}
 
 			return count;
+		}
+
+		public Table GetTableOfForeignKey(string tablename, string columnname) {
+			Table table = null;
+			string tableRelation = string.Empty;
+
+			using (MySqlTransaction transaction = Connection.Instance.StartTransaction()) {
+
+				//Structure
+				string query = "SELECT REFERENCED_TABLE_NAME"
+							 + " FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE"
+							 + " WHERE TABLE_SCHEMA = \"" + ConnectionString.Instance.Database + "\" AND TABLE_NAME = \"" + tablename + "\" AND COLUMN_NAME = \"" + columnname + "\"";
+				MySqlCommand command = Connection.Instance.GetCommand(query, transaction);
+
+				using (MySqlDataReader reader = command.ExecuteReader()) {
+					while (reader.Read()) {
+						tableRelation = DbUtils.GetString(reader["REFERENCED_TABLE_NAME"]);
+					}
+				}
+
+				//Data
+				if (!string.IsNullOrEmpty(tableRelation)) {
+					table = this.GetTable(tableRelation);
+				}
+
+				transaction.Commit();
+			}
+
+			return table;
 		}
 
 	}

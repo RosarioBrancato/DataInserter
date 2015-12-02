@@ -18,10 +18,14 @@ namespace FlyAwayInserter {
 		private DbInformation dbInformation = null;
 		private DbFlyAway dbFlyAway = null;
 
+		private int height_start = 600;
 		private TextBox ctrlToIncrement = null;
+
 
 		public FlyAwayInserter() {
 			InitializeComponent();
+
+			this.height_start = this.Height;
 
 			this.dbInformation = new DbInformation();
 			this.dbFlyAway = new DbFlyAway();
@@ -29,6 +33,7 @@ namespace FlyAwayInserter {
 			//Set up
 			this.configureConnection();
 		}
+
 
 		private void fillTablenames() {
 			List<string> tablenames = this.dbInformation.GetTablenames();
@@ -43,18 +48,40 @@ namespace FlyAwayInserter {
 
 		private void loadTable(string tablename) {
 			if (tablename.Trim().Length > 0) {
-				List<ColumnStructure> cs = this.dbInformation.GetColumnInformation(tablename);
-
-				this.table = new Table(tablename, cs);
-
-				this.updateRowCount();
+				this.table = this.dbInformation.GetTable(tablename);
+				this.fillListview();
 				this.configureView();
+
+				//clear existing data to create new inserts
+				this.table.DataRows.Clear();
 			}
 		}
 
-		private void updateRowCount() {
-			int rowCount = this.dbInformation.GetRowCount(this.table.TableName);
-			this.lblTableRowCount.Text = "Row count: " + rowCount.ToString();
+		private void fillListview() {
+			this.lsvTableData.BeginUpdate();
+
+			this.lsvTableData.Items.Clear();
+			this.lsvTableData.Columns.Clear();
+
+			foreach(ColumnStructure cs in this.table.ColumnStructure) {
+				this.lsvTableData.Columns.Add(cs.ColumnName, 150);
+			}
+
+			foreach(DTO.DataRow row in this.table.DataRows) {
+				List<string> entry = new List<string>();
+
+				foreach (ColumnStructure cs in this.table.ColumnStructure) {
+					foreach (Flag flag in row.Attributes) {
+						if (flag.ColumnName == cs.ColumnName) {
+							entry.Add(flag.Value);
+						}
+					}
+				}
+
+				this.lsvTableData.Items.Add(new ListViewItem(entry.ToArray())); 
+			}
+
+			this.lsvTableData.EndUpdate();
 		}
 
 		private void configureView() {
@@ -62,7 +89,7 @@ namespace FlyAwayInserter {
 			this.pnlValues.Controls.Clear();
 			this.pnlColumnInfos.Controls.Clear();
 
-			int heightFrm = 430;
+			int heightFrm = this.height_start;
 			int heightPnl = 10;
 
 			int location_y = 10;
@@ -79,16 +106,25 @@ namespace FlyAwayInserter {
 				lblColumnName.Text = cs.ColumnName + ":";
 				this.pnlColumnnames.Controls.Add(lblColumnName);
 
-				//TextBox Value
-				TextBox textbox = this.GetValueTextBox();
-				textbox.Location = new Point(0, location_y);
-				textbox.Tag = cs;
-				if (!string.IsNullOrEmpty(cs.Extra) && cs.Extra.ToLower().Contains("auto_increment")) {
-					textbox.Text = "1";
-					textbox.TabStop = false;
-					this.ctrlToIncrement = textbox;
+				//Value
+				if (cs.KeyType.ToLower() == "mul") {
+					ComboBox combobox = this.GetValueComboBox(cs);
+					combobox.Location = new Point(0, location_y);
+					combobox.Tag = cs;
+					this.pnlValues.Controls.Add(combobox);
+
+				} else {
+					//TextBox
+					TextBox textbox = this.GetValueTextBox();
+					textbox.Location = new Point(0, location_y);
+					textbox.Tag = cs;
+					if (!string.IsNullOrEmpty(cs.Extra) && cs.Extra.ToLower().Contains("auto_increment")) {
+						textbox.Text = "1";
+						textbox.TabStop = false;
+						this.ctrlToIncrement = textbox;
+					}
+					this.pnlValues.Controls.Add(textbox);
 				}
-				this.pnlValues.Controls.Add(textbox);
 
 				//Label ColumnInfo
 				Label lblColumnInfo = this.GetColumnInfoLabel();
@@ -135,6 +171,39 @@ namespace FlyAwayInserter {
 			return textbox;
 		}
 
+		private ComboBox GetValueComboBox(ColumnStructure cs) {
+			ComboBox combobox = new ComboBox();
+			combobox.BeginUpdate();
+
+			combobox.DropDownStyle = ComboBoxStyle.DropDownList;
+			combobox.Width = this.pnlValues.Width - 3;
+			combobox.Font = new Font("Microsoft Sans Serif", 10);
+
+			Table table = this.dbInformation.GetTableOfForeignKey(this.table.TableName, cs.ColumnName);
+
+			if (table != null) {
+				if(cs.IsNullable.ToLower() == "yes") {
+					combobox.Items.Add("");
+				}
+
+				foreach (DTO.DataRow row in table.DataRows) {
+					string item = string.Empty;
+					foreach (Flag flag in row.Attributes) {
+						item += flag.Value + "; ";
+					}
+					combobox.Items.Add(item);
+				}
+			}
+
+			if(combobox.Items.Count > 0) {
+				combobox.SelectedIndex = 0;
+			}
+
+			combobox.EndUpdate();
+
+			return combobox;
+		}
+
 		private Label GetColumnInfoLabel() {
 			Label label = new Label();
 
@@ -161,9 +230,16 @@ namespace FlyAwayInserter {
 			DTO.DataRow row = new DTO.DataRow();
 			row.ColumnStructure = this.table.ColumnStructure;
 			foreach (Control ctrl in this.pnlValues.Controls) {
+				ColumnStructure cs = (ColumnStructure)ctrl.Tag;
 				if (ctrl is TextBox) {
-					ColumnStructure cs = (ColumnStructure)ctrl.Tag;
 					row.Attributes.Add(new Flag(cs.ColumnName, ctrl.Text, cs.DataType));
+
+				} else if(ctrl is ComboBox) {
+					string value = string.Empty;
+					if(!string.IsNullOrEmpty(ctrl.Text)) {
+						value = ctrl.Text.Split(';')[0];
+                    }
+					row.Attributes.Add(new Flag(cs.ColumnName, value, cs.DataType));
 				}
 			}
 			this.table.DataRows.Add(row);
@@ -186,8 +262,14 @@ namespace FlyAwayInserter {
 
 		private void executeQuery() {
 			if (this.txtQuery.Text.Trim().Length > 0) {
+				string query = this.txtQuery.Text;
+				List<DTO.DataRow> rows = this.table.DataRows;
+
 				ReportMessage message = this.dbFlyAway.ExecuteQuery(this.txtQuery.Text);
-				this.updateRowCount();
+				this.loadTable((string)this.cmbTables.SelectedItem);
+
+				this.txtQuery.Text = query;
+				this.table.DataRows = rows;
 
                 MessageBox.Show(this, message.Message, "Execute query", MessageBoxButtons.OK, message.GetIconOfStatus());
 			}
@@ -202,6 +284,7 @@ namespace FlyAwayInserter {
 				}
 			}
 		}
+
 
 		private void cmbTables_SelectedIndexChanged(object sender, EventArgs e) {
 			if (this.cmbTables.SelectedItem != null) {

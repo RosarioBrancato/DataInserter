@@ -9,6 +9,7 @@ namespace FlyAwayInserter.DTO {
 
 		public string ColumnName { get; set; }
 		public string DataType { get; set; }
+		public string KeyType { get; set; }
 		public string IsNullable { get; set; }
 		public string Extra { get; set; }
 

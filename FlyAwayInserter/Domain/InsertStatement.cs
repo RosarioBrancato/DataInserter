@@ -29,7 +29,12 @@ namespace FlyAwayInserter.DTO {
 				for (int k = 0; k < table.DataRows[i].Attributes.Count; k++) {
 					Flag flag = table.DataRows[i].Attributes[k];
 
-					if (flag.DataType.ToLower().Contains("varchar") || flag.DataType.ToLower().Contains("enum") || flag.DataType.ToLower().Contains("text")) {
+					if (flag.DataType.ToLower().Contains("char") 
+						|| flag.DataType.ToLower().Contains("enum") 
+						|| flag.DataType.ToLower().Contains("text")
+						|| flag.DataType.ToLower().Contains("date")
+						|| flag.DataType.ToLower().Contains("time")) {
+
 						query.Append("\"");
 						query.Append(flag.Value);
 						query.Append("\"");

@@ -48,5 +48,6 @@ Temporary Items
 
 .vs/*
 FlyAwayInserter/bin/*
+!FlyAwayInserter/bin/Debug/MySql.Data.dll
 FlyAwayInserter/obj/*
 
