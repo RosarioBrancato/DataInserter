@@ -262,14 +262,22 @@ namespace FlyAwayInserter {
 
 		private void executeQuery() {
 			if (this.txtQuery.Text.Trim().Length > 0) {
+				//Cache values
 				string query = this.txtQuery.Text;
 				List<DTO.DataRow> rows = this.table.DataRows;
+				string id = string.Empty;
+				if (this.ctrlToIncrement != null) {
+					id = this.ctrlToIncrement.Text;
+				}
 
 				ReportMessage message = this.dbFlyAway.ExecuteQuery(this.txtQuery.Text);
 				this.loadTable((string)this.cmbTables.SelectedItem);
 
 				this.txtQuery.Text = query;
 				this.table.DataRows = rows;
+				if(this.ctrlToIncrement != null) {
+					this.ctrlToIncrement.Text = id;
+				}
 
                 MessageBox.Show(this, message.Message, "Execute query", MessageBoxButtons.OK, message.GetIconOfStatus());
 			}
