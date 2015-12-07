@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FlyAwayInserter));
 			this.cmbTables = new System.Windows.Forms.ComboBox();
 			this.txtQuery = new System.Windows.Forms.TextBox();
 			this.lblQuery = new System.Windows.Forms.Label();
@@ -153,6 +154,7 @@
 			// 
 			// btnExcecute
 			// 
+			this.btnExcecute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnExcecute.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnExcecute.Location = new System.Drawing.Point(15, 213);
 			this.btnExcecute.Name = "btnExcecute";
@@ -293,6 +295,7 @@
 			this.Controls.Add(this.pnlTablename);
 			this.Controls.Add(this.pnlFields);
 			this.Controls.Add(this.pnlBottom);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "FlyAwayInserter";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "FlyAwayInserter";

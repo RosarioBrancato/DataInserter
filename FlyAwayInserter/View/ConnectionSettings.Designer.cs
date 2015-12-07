@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectionSettings));
 			this.lblHost = new System.Windows.Forms.Label();
 			this.txtHost = new System.Windows.Forms.TextBox();
 			this.lblTablename = new System.Windows.Forms.Label();
@@ -178,6 +179,7 @@
 			this.Controls.Add(this.lblTablename);
 			this.Controls.Add(this.lblHost);
 			this.Controls.Add(this.txtHost);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ConnectionSettings";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Connection Settings";

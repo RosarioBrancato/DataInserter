@@ -36,6 +36,7 @@ namespace FlyAwayInserter {
 
 
 		private void fillTablenames() {
+			this.cmbTables.Items.Clear();
 			List<string> tablenames = this.dbInformation.GetTablenames();
 			foreach(string name in tablenames) {
 				this.cmbTables.Items.Add(name);
