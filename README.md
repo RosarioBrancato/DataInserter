@@ -2,7 +2,7 @@
 
 DataInserter is a developer tool, which allows to interact with tables of a MySql database.
 
-## Current features
+## Current Features
 
 - Presentation of tables data in a list view
 - Generation of insert statements
