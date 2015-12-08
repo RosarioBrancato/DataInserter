@@ -46,8 +46,13 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# My ignores
 .vs/*
-FlyAwayInserter/bin/*
-!FlyAwayInserter/bin/Debug/MySql.Data.dll
-FlyAwayInserter/obj/*
+
+DataInserter/bin/*.*
+DataInserter/bin/Debug/*
+!DataInserter/bin/Debug/MySql.Data.dll
+
+DataInserter/bin/Release/*
+DataInserter/obj/*
 
