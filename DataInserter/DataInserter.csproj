@@ -57,7 +57,7 @@
     <Compile Include="Db\DbExecution.cs" />
     <Compile Include="Db\DbInformation.cs" />
     <Compile Include="Db\DbUtils.cs" />
-    <Compile Include="Domain\MySqlConstants.cs" />
+    <Compile Include="Db\MySqlConstants.cs" />
     <Compile Include="DTO\ColumnStructure.cs" />
     <Compile Include="DTO\Flag.cs" />
     <Compile Include="DTO\DataRow.cs" />
