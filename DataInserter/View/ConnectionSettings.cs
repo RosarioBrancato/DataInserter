@@ -27,7 +27,7 @@ namespace DataInserter.View {
 			this.txtPassword.PasswordChar = '*';
 
 			if (string.IsNullOrEmpty(ConnectionString.Instance.Host)) {
-				this.load();
+				this.LoadConfig();
 			} else {
 				this.host = ConnectionString.Instance.Host;
 				this.port = ConnectionString.Instance.Port;
@@ -48,12 +48,12 @@ namespace DataInserter.View {
 			base.OnClosing(e);
 
 			if (this.DialogResult != DialogResult.Yes) {
-				this.loadFromCache();
+				this.LoadFromCache();
 			}
 		}
 
 
-		private void loadFromCache() {
+		private void LoadFromCache() {
 			ConnectionString.Instance.Host = this.host;
 			ConnectionString.Instance.Port = this.port;
 			ConnectionString.Instance.Database = this.database;
@@ -61,7 +61,7 @@ namespace DataInserter.View {
 			ConnectionString.Instance.Password = this.password;
 		}
 
-		private void load() {
+		private void LoadConfig() {
 			try {
 				string path = Path.Combine(Application.StartupPath, "ConnectionSettingsConf.xml");
 				if (File.Exists(path)) {
@@ -89,7 +89,7 @@ namespace DataInserter.View {
 			}
 		}
 
-		private void save() {
+		private void Save() {
 			try {
 				XElement connectionSetting = new XElement("ConnectionSettings");
 				connectionSetting.Add(new XElement("Host", ConnectionString.Instance.Host));
@@ -104,7 +104,7 @@ namespace DataInserter.View {
 			}
 		}
 
-		private void btnSave_Click(object sender, EventArgs e) {
+		private void BtnSave_Click(object sender, EventArgs e) {
 			ConnectionString.Instance.Host = this.txtHost.Text;
 			ConnectionString.Instance.Port = this.txtPort.Text;
 			ConnectionString.Instance.Database = this.txtDatabase.Text;
@@ -116,7 +116,7 @@ namespace DataInserter.View {
 					transaction.Rollback();
 				}
 
-				this.save();
+				this.Save();
 				this.DialogResult = DialogResult.Yes;
 
 			} catch(MySqlException ex) {
@@ -124,8 +124,8 @@ namespace DataInserter.View {
 			}
 		}
 
-		private void btnCancel_Click(object sender, EventArgs e) {
-			this.loadFromCache();
+		private void BtnCancel_Click(object sender, EventArgs e) {
+			this.LoadFromCache();
 			this.DialogResult = DialogResult.Cancel;
 		}
 

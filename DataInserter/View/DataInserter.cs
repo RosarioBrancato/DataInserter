@@ -34,11 +34,11 @@ namespace DataInserter {
 			this.dbFlyAway = new DbExecute();
 
 			//Set up
-			this.configureConnection();
+			this.ConfigureConnection();
 		}
 
 
-		private void fillTablenames() {
+		private void FillTablenames() {
 			this.cmbTables.Items.Clear();
 			List<string> tablenames = this.dbInformation.GetTablenames();
 			foreach(string name in tablenames) {
@@ -50,18 +50,18 @@ namespace DataInserter {
 			}
 		}
 
-		private void loadTable(string tablename) {
+		private void LoadTable(string tablename) {
 			if (tablename.Trim().Length > 0) {
 				this.table = this.dbInformation.GetTable(tablename);
-				this.fillListview();
-				this.configureView();
+				this.FillListview();
+				this.ConfigureView();
 
 				//clear existing data to create new inserts
 				this.table.DataRows.Clear();
 			}
 		}
 
-		private void fillListview() {
+		private void FillListview() {
 			this.lsvTableData.BeginUpdate();
 
 			this.lsvTableData.Items.Clear();
@@ -94,7 +94,7 @@ namespace DataInserter {
 			this.lsvTableData.EndUpdate();
 		}
 
-		private void configureView() {
+		private void ConfigureView() {
 			this.pnlColumnnames.Controls.Clear();
 			this.pnlValues.Controls.Clear();
 			this.pnlColumnInfos.Controls.Clear();
@@ -226,7 +226,7 @@ namespace DataInserter {
 			return label;
 		}
 
-		private void clearFields() {
+		private void ClearFields() {
 			foreach(Control ctrl in this.pnlValues.Controls) {
 				if(ctrl is TextBox) {
 					((TextBox)ctrl).Clear();
@@ -235,7 +235,7 @@ namespace DataInserter {
 		}
 
 
-		private void add() {
+		private void Add() {
 			//Add row
 			DTO.DataRow row = new DTO.DataRow();
 			row.ColumnStructure = this.table.ColumnStructure;
@@ -256,21 +256,20 @@ namespace DataInserter {
 
 			//Clear fields
 			if (this.ctrlToIncrement != null) {
-				int id = 1;
-				Int32.TryParse(this.ctrlToIncrement.Text, out id);
+				Int32.TryParse(this.ctrlToIncrement.Text, out int id);
 
-				this.clearFields();
+				this.ClearFields();
 				this.ctrlToIncrement.Text = (id + 1).ToString();
 
 			} else {
-				this.clearFields();
+				this.ClearFields();
 			}
 
 			//Generate query
 			this.txtQuery.Text = InsertStatement.GetQuery(table);
         }
 
-		private void executeQuery() {
+		private void ExecuteQuery() {
 			if (this.txtQuery.Text.Trim().Length > 0) {
 				//Cache values
 				string query = this.txtQuery.Text;
@@ -281,7 +280,7 @@ namespace DataInserter {
 				}
 
 				ReportMessage message = this.dbFlyAway.ExecuteQuery(this.txtQuery.Text);
-				this.loadTable((string)this.cmbTables.SelectedItem);
+				this.LoadTable((string)this.cmbTables.SelectedItem);
 
 				this.txtQuery.Text = query;
 				this.table.DataRows = rows;
@@ -293,41 +292,41 @@ namespace DataInserter {
 			}
 		}
 
-		private void configureConnection() {
+		private void ConfigureConnection() {
 			using (ConnectionSettings dlg = new ConnectionSettings()) {
 				DialogResult res = dlg.ShowDialog(this);
 
 				if (res == DialogResult.Yes) {
-					this.fillTablenames();
+					this.FillTablenames();
 				}
 			}
 		}
 
 
-		private void cmbTables_SelectedIndexChanged(object sender, EventArgs e) {
+		private void CmbTables_SelectedIndexChanged(object sender, EventArgs e) {
 			if (this.cmbTables.SelectedItem != null) {
-				this.loadTable((string)this.cmbTables.SelectedItem);
+				this.LoadTable((string)this.cmbTables.SelectedItem);
 			}
 		}
 
-		private void btnExcecute_Click(object sender, EventArgs e) {
-			this.executeQuery();
+		private void BtnExcecute_Click(object sender, EventArgs e) {
+			this.ExecuteQuery();
 		}
 
-		private void chkAllowEdit_CheckedChanged(object sender, EventArgs e) {
+		private void ChkAllowEdit_CheckedChanged(object sender, EventArgs e) {
 			this.txtQuery.ReadOnly = !this.chkAllowEdit.Checked;
 		}
 
-		private void btnAdd_Click(object sender, EventArgs e) {
-			this.add();
+		private void BtnAdd_Click(object sender, EventArgs e) {
+			this.Add();
 			this.SelectNextControl(this.btnAdd, true, true, true, true);
 		}
 
-		private void btnConnectionSettings_Click(object sender, EventArgs e) {
-			this.configureConnection();
+		private void BtnConnectionSettings_Click(object sender, EventArgs e) {
+			this.ConfigureConnection();
 		}
 
-		private void txtQuery_KeyDown(object sender, KeyEventArgs e) {
+		private void TxtQuery_KeyDown(object sender, KeyEventArgs e) {
 			if(e.Control && e.KeyCode == Keys.A) {
 				this.txtQuery.SelectAll();
 			}

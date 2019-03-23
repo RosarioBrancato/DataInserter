@@ -65,7 +65,7 @@
 			this.cmbTables.Size = new System.Drawing.Size(332, 24);
 			this.cmbTables.TabIndex = 0;
 			this.cmbTables.TabStop = false;
-			this.cmbTables.SelectedIndexChanged += new System.EventHandler(this.cmbTables_SelectedIndexChanged);
+			this.cmbTables.SelectedIndexChanged += new System.EventHandler(this.CmbTables_SelectedIndexChanged);
 			// 
 			// txtQuery
 			// 
@@ -82,7 +82,7 @@
 			this.txtQuery.TabIndex = 1;
 			this.txtQuery.TabStop = false;
 			this.txtQuery.WordWrap = false;
-			this.txtQuery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtQuery_KeyDown);
+			this.txtQuery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtQuery_KeyDown);
 			// 
 			// lblQuery
 			// 
@@ -125,7 +125,7 @@
 			this.btnConnectionSettings.TabStop = false;
 			this.btnConnectionSettings.Text = "Connection Settings...";
 			this.btnConnectionSettings.UseVisualStyleBackColor = true;
-			this.btnConnectionSettings.Click += new System.EventHandler(this.btnConnectionSettings_Click);
+			this.btnConnectionSettings.Click += new System.EventHandler(this.BtnConnectionSettings_Click);
 			// 
 			// pnlQuery
 			// 
@@ -150,7 +150,7 @@
 			this.chkAllowEdit.TabStop = false;
 			this.chkAllowEdit.Text = "Allow edit";
 			this.chkAllowEdit.UseVisualStyleBackColor = true;
-			this.chkAllowEdit.CheckedChanged += new System.EventHandler(this.chkAllowEdit_CheckedChanged);
+			this.chkAllowEdit.CheckedChanged += new System.EventHandler(this.ChkAllowEdit_CheckedChanged);
 			// 
 			// btnExcecute
 			// 
@@ -163,7 +163,7 @@
 			this.btnExcecute.TabStop = false;
 			this.btnExcecute.Text = "Excecute Query";
 			this.btnExcecute.UseVisualStyleBackColor = true;
-			this.btnExcecute.Click += new System.EventHandler(this.btnExcecute_Click);
+			this.btnExcecute.Click += new System.EventHandler(this.BtnExcecute_Click);
 			// 
 			// pnlFields
 			// 
@@ -249,7 +249,7 @@
 			this.btnAdd.TabIndex = 99;
 			this.btnAdd.Text = "Add";
 			this.btnAdd.UseVisualStyleBackColor = true;
-			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+			this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
 			// 
 			// pnlTableData
 			// 
